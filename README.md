@@ -73,11 +73,11 @@ AI-powered career guidance for PSA employees. See your skill gaps, get upskillin
      psa-pathfinder:local
    ```
 3. Open your browser:
-   `http://localhost:8080/ui/`
+   `http://localhost:5173/`
 
 ## Use the app
 
-1. **Open** `http://localhost:8080/ui/`.
+1. **Open** `http://localhost:5173/`.
 2. **Select an employee** from the dropdown.
 3. Review your **Career Plan**:
 
