@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    command: uvicorn app.main:app --host ${HOST:-0.0.0.0} --port ${PORT:-8080} --reload
+    volumes:
+      - ./:/code
+      - ./data:/mnt/data
+    working_dir: /code
+    ports:
+      - "${PORT:-8080}:8080"
+    environment:
+      - EMP_PROFILES_PATH=${EMP_PROFILES_PATH:-/mnt/data/Employee_Profiles.json}
+      - FUNCTIONS_SKILLS_PATH=${FUNCTIONS_SKILLS_PATH:-/mnt/data/Functions & Skills(List).csv}
+      - COURSES_PATH=${COURSES_PATH:-/mnt/data/Courses_Catalog.csv}
