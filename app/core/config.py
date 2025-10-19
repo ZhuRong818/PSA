@@ -42,5 +42,10 @@ COURSES_PATH = _pick("COURSES_PATH", [
 # OpenAI settings (optional)
 OPENAI_API_KEY = _clean(os.getenv("OPENAI_API_KEY"))
 OPENAI_MODEL = _clean(os.getenv("OPENAI_MODEL")) or "gpt-4o-mini"
-OPENAI_BASE_URL = _clean(os.getenv("OPENAI_BASE_URL"))  # optional, e.g., for proxy
+OPENAI_BASE_URL = _clean(os.getenv("OPENAI_BASE_URL"))  # optional, non-Azure custom endpoint
 OPENAI_TIMEOUT = float(_clean(os.getenv("OPENAI_TIMEOUT")) or "15")
+
+# Azure OpenAI (optional)
+AZURE_OPENAI_ENDPOINT = _clean(os.getenv("AZURE_OPENAI_ENDPOINT"))  # e.g. https://your-resource.openai.azure.com
+AZURE_OPENAI_DEPLOYMENT = _clean(os.getenv("AZURE_OPENAI_DEPLOYMENT"))  # e.g. gpt-4o-mini
+AZURE_OPENAI_API_VERSION = _clean(os.getenv("AZURE_OPENAI_API_VERSION")) or "2024-05-01-preview"

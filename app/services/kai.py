@@ -56,14 +56,30 @@ def chat_reply(q: str, email: Optional[str] = None, locale: Optional[str] = None
             }
         return {"reply": "Ask about roles, skills, mentors, or courses. Try: /plans or /courses"}
 
-    # Use OpenAI when key is available
+    # Use OpenAI (or Azure OpenAI) when key is available
     try:
-        from openai import OpenAI
+        client = None
+        model_name = config.OPENAI_MODEL
 
-        client_kwargs = {}
-        if config.OPENAI_BASE_URL:
-            client_kwargs["base_url"] = config.OPENAI_BASE_URL
-        client = OpenAI(api_key=config.OPENAI_API_KEY, **client_kwargs)
+        if config.AZURE_OPENAI_DEPLOYMENT:
+            from openai import AzureOpenAI  # type: ignore
+
+            endpoint = config.AZURE_OPENAI_ENDPOINT or config.OPENAI_BASE_URL
+            if not endpoint:
+                raise RuntimeError("AZURE_OPENAI_ENDPOINT (or OPENAI_BASE_URL) must be set for Azure OpenAI")
+            client = AzureOpenAI(
+                api_key=config.OPENAI_API_KEY,
+                api_version=config.AZURE_OPENAI_API_VERSION,
+                azure_endpoint=endpoint,
+            )
+            model_name = config.AZURE_OPENAI_DEPLOYMENT
+        else:
+            from openai import OpenAI  # type: ignore
+
+            client_kwargs = {}
+            if config.OPENAI_BASE_URL:
+                client_kwargs["base_url"] = config.OPENAI_BASE_URL
+            client = OpenAI(api_key=config.OPENAI_API_KEY, **client_kwargs)
 
         system = (
             "You are ‘Kai’, a concise, friendly career assistant for PSA. "
@@ -78,7 +94,7 @@ def chat_reply(q: str, email: Optional[str] = None, locale: Optional[str] = None
 
         # Chat Completions API
         resp = client.chat.completions.create(
-            model=config.OPENAI_MODEL,
+            model=model_name,
             messages=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": user},
@@ -90,5 +106,5 @@ def chat_reply(q: str, email: Optional[str] = None, locale: Optional[str] = None
             txt = "I can help with roles, mentors, and courses. Try /plans or /courses."
         return {"reply": txt}
     except Exception as e:
-        # Fail-safe fallback
+        print(f"Kai OpenAI fallback: {e}", flush=True)
         return {"reply": "I can help with roles, mentors, and courses. Try /plans or /courses."}

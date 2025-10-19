@@ -35,6 +35,7 @@ Environment variables (FastAPI) — see `.env.example`:
 - `FUNCTIONS_SKILLS_PATH` default `./data/Functions & Skills(List).csv`
 - `COURSES_PATH` default `./data/Courses_Catalog.csv`
 - `OPENAI_API_KEY`, `OPENAI_MODEL`, `OPENAI_BASE_URL`, `OPENAI_TIMEOUT`
+- Azure OpenAI (optional): set `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_DEPLOYMENT`, `AZURE_OPENAI_API_VERSION`
 
 Frontend environment (optional):
 - `frontend/.env` → `VITE_API_BASE_URL=http://localhost:8080`
@@ -68,6 +69,13 @@ Frontend environment (optional):
 - Do **not** commit real keys. Supply via shell export or `.env` (auto-loaded):
   - `export OPENAI_API_KEY="openai3 Active 02dd5535cd304762b0325aceb8ab83f1"`
 - Optional overrides: `OPENAI_MODEL` (default `gpt-4o-mini`), `OPENAI_BASE_URL` for proxies, `OPENAI_TIMEOUT` seconds.
+- Azure OpenAI example:
+  ```bash
+  export OPENAI_API_KEY="02dd5535cd304762b0325aceb8ab83f1"
+  export AZURE_OPENAI_ENDPOINT="https://<your-resource>.openai.azure.com"
+  export AZURE_OPENAI_DEPLOYMENT="kai-gpt4o"
+  export AZURE_OPENAI_API_VERSION="2024-05-01-preview"
+  ```
 
 ## Troubleshooting 500 errors
 - Ensure dependencies are installed: `pip install -r requirements.txt`.
