@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query
 from ..core import config
-from ..services import recommender
+from ..services import recommender, kai
 
 router = APIRouter()
 
@@ -45,13 +45,5 @@ def find_courses(
     )
 
 @router.get("/chat")
-def chat(q: str = Query(..., description="User query"), email: str | None = None):
-    # Very simple stub
-    if "stress" in q.lower() or "overwhelm" in q.lower():
-        return {"reply": "I'm here for you. Try a 5‑minute break and paced breathing. You can access PSA Well‑being resources or EAP."}
-    if "skills" in q.lower() and email:
-        plans = recommender.recommend(config.EMP_PROFILES_PATH, config.FUNCTIONS_SKILLS_PATH)
-        emp = plans.get(email, {}).get("employee")
-        if emp:
-            return {"reply": f"You're in {emp['role']} ({emp['department']}). I can suggest next roles and courses. Try /plans."}
-    return {"reply": "Ask me about roles, skills, mentors, or well‑being. Try: /plans"}
+def chat(q: str = Query(..., description="User query"), email: str | None = None, locale: str | None = None):
+    return kai.chat_reply(q=q, email=email, locale=locale)

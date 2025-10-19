@@ -33,6 +33,20 @@ Environment variables (see `.env.example`):
 - `GET /courses[?q=..&skill=..&difficulty=..&min_hours=..&max_hours=..&language=..&limit=10]` → Course search
 - `GET /chat?q=...&email=...` → Simple “Kai” assistant stub
 
+## UI
+- Open http://localhost:8080/ui/ for a minimal, accessible web UI to:
+  - Choose an employee and load plans/mentors
+  - Search courses with filters
+  - Chat with Kai (uses OpenAI if `OPENAI_API_KEY` is set, otherwise a local heuristic)
+
+## OpenAI key (optional)
+- Do NOT hardcode your key in source. Set it via environment:
+  - Local shell: `export OPENAI_API_KEY=sk-...`
+  - Or add to `.env` (not committed): `OPENAI_API_KEY=sk-...`
+- Optional overrides: `OPENAI_MODEL` (default `gpt-4o-mini`), `OPENAI_BASE_URL` for proxies.
+ - If your key contains spaces, wrap it in quotes in your shell or `.env`:
+   - `export OPENAI_API_KEY="<your key with spaces>"`
+
 ## Notes
 - This is a minimal, heuristic prototype intended for demo. Swap heuristics with ML (pairwise LTR ranker, proficiencies, and pgvector graph) in later iterations.
 - Data files live under `data/` and are small mock datasets for local use.

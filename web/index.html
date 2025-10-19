@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PSA PathFinder</title>
+    <link rel="stylesheet" href="/ui/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1 aria-label="PSA PathFinder">PSA PathFinder</h1>
+      <p>Career paths, skills, mentors, and Kai chat</p>
+    </header>
+
+    <main>
+      <section aria-labelledby="employee-section">
+        <h2 id="employee-section">Employee</h2>
+        <label for="email-select">Select employee</label>
+        <select id="email-select" aria-describedby="email-help"></select>
+        <div id="email-help" class="help">Choose an employee to personalize results.</div>
+        <div class="row">
+          <button id="btn-load-plan">Load Plan</button>
+          <button id="btn-mentors">Mentors</button>
+        </div>
+      </section>
+
+      <section aria-labelledby="courses-section">
+        <h2 id="courses-section">Courses</h2>
+        <div class="row">
+          <input id="course-skill" placeholder="Skill (e.g., Cloud Architecture)" aria-label="Course skill" />
+          <select id="course-difficulty" aria-label="Difficulty">
+            <option value="">Any difficulty</option>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+          </select>
+          <input id="course-min" type="number" step="0.5" placeholder="Min hours" aria-label="Minimum hours" />
+          <input id="course-max" type="number" step="0.5" placeholder="Max hours" aria-label="Maximum hours" />
+          <button id="btn-courses">Search</button>
+        </div>
+      </section>
+
+      <section aria-labelledby="chat-section">
+        <h2 id="chat-section">Kai Chat</h2>
+        <div class="row">
+          <input id="chat-input" placeholder="Ask Kai about roles, skills, or well-being" aria-label="Chat input" />
+          <button id="btn-chat">Send</button>
+        </div>
+        <div id="chat-reply" class="box" role="status" aria-live="polite"></div>
+      </section>
+
+      <section aria-labelledby="output-section">
+        <h2 id="output-section">Output</h2>
+        <pre id="output" class="box" tabindex="0" aria-label="Results output"></pre>
+      </section>
+    </main>
+
+    <footer>
+      <small>Demo prototype. Replace heuristics with ML later.</small>
+    </footer>
+
+    <script src="/ui/app.js" defer></script>
+  </body>
+  </html>
+
