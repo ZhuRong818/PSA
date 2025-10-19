@@ -1,52 +1,82 @@
-# PSA PathFinder – Prototype (Backend Monolith)
+# PSA PathFinder – Prototype (Backend + React UI)
 
-Minimal FastAPI service that:
-- Loads employee profiles, functions/skills taxonomy, and a small courses catalog from local files
+Modern FastAPI + React experience that:
+- Loads employee profiles, functions/skills taxonomy, and a courses catalog from local files (`data/`)
 - Generates career plans, leadership potential, mentors, and learning suggestions
-- Exposes tool-like endpoints for Kai: `get_plans`, `get_lpi`, `get_mentors`, `find_courses`
+- Simulates mentorship, recognition, and feedback workflows with realistic responses
+- Offers “Kai” — a conversational assistant backed by OpenAI (optional via `OPENAI_API_KEY`)
+- Provides a corporate-styled React UI for employees, mentors, and L&D leaders
 
 ## Quick start
 
 Data is bundled in `data/` and mounted at `/mnt/data` in Docker.
 
 ```bash
-# 1) Local (no docker)
-python -m venv .venv && source .venv/bin/activate
+# 1) Backend (FastAPI)
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
+cp .env.example .env              # edit if needed; defaults point to ./data/
+# echo 'OPENAI_API_KEY="openai3 Active 02dd5535cd304762b0325aceb8ab83f1"' >> .env
+bash scripts/run_local.sh         # uvicorn @ http://localhost:8080
 
-# 2) Docker
-cp .env.example .env   # optional override
+# 2) Frontend (React + Vite)
+cd frontend
+npm install
+npm run dev                       # http://localhost:5173 (proxying API)
+
+# Optional Docker back end
+cd ..
+cp .env.example .env
 docker compose up --build
 ```
 
-Environment variables (see `.env.example`):
-- `EMP_PROFILES_PATH` default `/mnt/data/Employee_Profiles.json`
-- `FUNCTIONS_SKILLS_PATH` default `/mnt/data/Functions & Skills(List).csv`
-- `COURSES_PATH` default `/mnt/data/Courses_Catalog.csv`
+Environment variables (FastAPI) — see `.env.example`:
+- `EMP_PROFILES_PATH` default `./data/Employee_Profiles.json` (falls back to `/mnt/data/...`)
+- `FUNCTIONS_SKILLS_PATH` default `./data/Functions & Skills(List).csv`
+- `COURSES_PATH` default `./data/Courses_Catalog.csv`
+- `OPENAI_API_KEY`, `OPENAI_MODEL`, `OPENAI_BASE_URL`, `OPENAI_TIMEOUT`
 
-## Endpoints
+Frontend environment (optional):
+- `frontend/.env` → `VITE_API_BASE_URL=http://localhost:8080`
+
+## API surface
 - `GET /health` → `{status: "ok"}`
-- `GET /plans[?email=email@psa]` → Career plans, next roles, upskilling, LPI
-- `GET /lpi[?email=email@psa]` → Leadership Potential Index per employee
-- `GET /mentors?email=email@psa[&limit=3]` → Mentor suggestions for an employee
-- `GET /courses[?q=..&skill=..&difficulty=..&min_hours=..&max_hours=..&language=..&limit=10]` → Course search
-- `GET /chat?q=...&email=...` → Simple “Kai” assistant stub
+- `GET /plans[?email=...]` → Career plans, leadership index, skills, nudges
+- `GET /lpi[?email=...]` → Leadership Potential Index lookup
+- `GET /mentors?email=...` → Mentor shortlist
+- `POST /mentors/request` → Simulated mentor introduction workflow
+- `GET /courses[...]` → Course search with filters
+- `POST /recognitions` → Recognition storyline + follow-up suggestions
+- `POST /feedback` → Reflection template + action nudges
+- `GET /leadership?limit=...` → Ranked leadership snapshot
+- `GET /chat?q=...&email=...` → Conversational Kai assistant (OpenAI if key provided)
 
 ## UI
-- Open http://localhost:8080/ui/ for a minimal, accessible web UI to:
-  - Choose an employee and load plans/mentors
-  - Search courses with filters
-  - Chat with Kai (uses OpenAI if `OPENAI_API_KEY` is set, otherwise a local heuristic)
+- React UI → `frontend/`
+  - `npm run dev` → http://localhost:5173 (uses Vite proxy to backend)
+  - `npm run build` → production bundle under `frontend/dist`
+  - Screens:
+    - Career snapshot with LPI, next roles, upskilling plan
+    - Mentor shortlist + request simulator
+    - Course explorer with difficulty & duration filters
+    - Recognition + feedback workflows with realistic prompts
+    - Leadership league table
+    - Kai chat surface (accessibility-first responses)
+- Legacy static demo remains at http://localhost:8080/ui/
 
-## OpenAI key (optional)
-- Do NOT hardcode your key in source. Set it via environment:
-  - Local shell: `export OPENAI_API_KEY=sk-...`
-  - Or add to `.env` (not committed): `OPENAI_API_KEY=sk-...`
-- Optional overrides: `OPENAI_MODEL` (default `gpt-4o-mini`), `OPENAI_BASE_URL` for proxies.
- - If your key contains spaces, wrap it in quotes in your shell or `.env`:
-   - `export OPENAI_API_KEY="<your key with spaces>"`
+## OpenAI key (optional but recommended)
+- Do **not** commit real keys. Supply via shell export or `.env` (auto-loaded):
+  - `export OPENAI_API_KEY="openai3 Active 02dd5535cd304762b0325aceb8ab83f1"`
+- Optional overrides: `OPENAI_MODEL` (default `gpt-4o-mini`), `OPENAI_BASE_URL` for proxies, `OPENAI_TIMEOUT` seconds.
 
-## Notes
-- This is a minimal, heuristic prototype intended for demo. Swap heuristics with ML (pairwise LTR ranker, proficiencies, and pgvector graph) in later iterations.
-- Data files live under `data/` and are small mock datasets for local use.
+## Troubleshooting 500 errors
+- Ensure dependencies are installed: `pip install -r requirements.txt`.
+- Verify data paths: with local runs, defaults point to `./data/*`. If you changed them, check `EMP_PROFILES_PATH`, `FUNCTIONS_SKILLS_PATH`, and `COURSES_PATH` in your environment or `.env`.
+- Check server logs in the terminal running Uvicorn to see the stack trace. A common cause is a missing file path or uninstalled dependency.
+
+## Notes & next steps
+- Current logic is heuristic to stay demo-friendly. Replace with production services:
+  - pgvector / Neo4j skill graph, pairwise ranking, proficiency models
+  - Persistent store (Postgres + Redis) and real HRIS/LMS integrations
+- Add CI (lint/test) and container builds before shipping.
+- Data files under `data/` are mock samples — swap for real PSA feeds when ready.
