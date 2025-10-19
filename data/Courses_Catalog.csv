@@ -1,26 +1,26 @@
 title,skill_name,provider,difficulty,duration_hours,language,url,description
-Cloud Architecture Foundations,Cloud Architecture,LinkedIn Learning,Beginner,4,English,https://example.com/cloud-arch-foundations,Core cloud concepts and reference architectures.
-Designing Hybrid Cloud on Azure,Cloud Architecture,Coursera,Advanced,12,English,https://example.com/designing-hybrid-azure,Hybrid connectivity, landing zones, governance.
-DevOps Automation with Terraform,Cloud DevOps & Automation,Udemy,Intermediate,8,English,https://example.com/devops-terraform,Infrastructure as Code patterns and CI/CD pipelines.
-Securing Cloud Infrastructure,Securing Cloud Infrastructure,LinkedIn Learning,Intermediate,6,English,https://example.com/securing-cloud,Identity, network, data protections in cloud.
-Network Architecture Basics,Network Architecture,Coursera,Beginner,6,English,https://example.com/network-arch,Routing, switching, segmentation, and resiliency.
-Middleware & Web Servers Essentials,Middleware & Web Servers,LinkedIn Learning,Beginner,5,English,https://example.com/middleware-essentials,Reverse proxies, app servers, tuning basics.
-Enterprise Architecture for IT Strategy,Enterprise Architecture,Coursera,Intermediate,10,English,https://example.com/ea-strategy,Operating models, roadmaps, capability mapping.
-Vulnerability Management Practitioner,Vulnerability Management,Udemy,Beginner,4,English,https://example.com/vm-practitioner,Scanning, prioritization, and remediation workflows.
-Network Security Monitoring,Network Security Management,LinkedIn Learning,Intermediate,6,English,https://example.com/nsm,Traffic analysis and SIEM triage fundamentals.
-Threat Intelligence and Detection,Cybersecurity Threat Intelligence and Detection,Coursera,Advanced,14,English,https://example.com/cti-detect,Collections, analysis, and detection engineering.
-Introduction to Forensics,Cybersecurity Forensics,Udemy,Beginner,5,English,https://example.com/forensics,Preservation, chain of custody, basic tooling.
-Cyber Risk Management,Cybersecurity Risk Management,LinkedIn Learning,Intermediate,6,English,https://example.com/cyber-risk,Frameworks, KRIs, and reporting.
-FP&A: Driver-Based Forecasting,Financial Planning and Analysis,LinkedIn Learning,Intermediate,5,English,https://example.com/fpa-driver-based,Drivers, sensitivity analysis, dashboards.
-Financial Modeling Bootcamp,Financial Modeling,Udemy,Advanced,12,English,https://example.com/fm-bootcamp,Valuation and scenario modeling.
-Treasury Operations Fundamentals,Treasury,LinkedIn Learning,Beginner,4,English,https://example.com/treasury-ops,Liquidity, cash positioning, and controls.
-Intro to Risk Management,Risk Management,Coursera,Beginner,6,English,https://example.com/intro-risk,Enterprise risk concepts and methods.
-Terminal Reporting 101,Terminal Reporting,Udemy,Beginner,3,English,https://example.com/terminal-reporting,Operational KPIs and dashboards.
-Carbon Accounting Basics,Carbon Accounting and Management,LinkedIn Learning,Beginner,5,English,https://example.com/carbon-accounting,Scopes 1-3 and reporting standards.
-HR Business Partner Foundations,Generalist / Business Partner,LinkedIn Learning,Beginner,4,English,https://example.com/hrbp-foundations,Core HRBP practices and consulting.
-Talent Management Strategy,Talent Management,Coursera,Intermediate,7,English,https://example.com/talent-strategy,Succession, potential, and development planning.
-Employee Engagement Essentials,Staff Development and Engagement,Udemy,Beginner,4,English,https://example.com/engagement-essentials,Measurement and interventions for engagement.
-Compensation Fundamentals,Compensation,LinkedIn Learning,Beginner,3,English,https://example.com/comp-fundamentals,Pay structures and governance.
-HRIS for Practitioners,HR Information Systems / Technology,Udemy,Intermediate,6,English,https://example.com/hris,Data models, integrations, and analytics.
-Leadership Development Toolkit,Leadership Development,LinkedIn Learning,Intermediate,6,English,https://example.com/leadership-toolkit,Influence, coaching, and decision-making.
-Organisation Development Practice,Organisation Development,Coursera,Advanced,10,English,https://example.com/od-practice,Design, change, and culture diagnostics.
+"Cloud Architecture Foundations","Cloud Architecture","LinkedIn Learning","Beginner",4,"English","https://example.com/cloud-arch-foundations","Core cloud concepts and reference architectures."
+"Designing Hybrid Cloud on Azure","Cloud Architecture","Coursera","Advanced",12,"English","https://example.com/designing-hybrid-azure","Hybrid connectivity, landing zones, governance."
+"DevOps Automation with Terraform","Cloud DevOps & Automation","Udemy","Intermediate",8,"English","https://example.com/devops-terraform","Infrastructure as Code patterns and CI/CD pipelines."
+"Securing Cloud Infrastructure","Securing Cloud Infrastructure","LinkedIn Learning","Intermediate",6,"English","https://example.com/securing-cloud","Identity, network, data protections in cloud."
+"Network Architecture Basics","Network Architecture","Coursera","Beginner",6,"English","https://example.com/network-arch","Routing, switching, segmentation, and resiliency."
+"Middleware & Web Servers Essentials","Middleware & Web Servers","LinkedIn Learning","Beginner",5,"English","https://example.com/middleware-essentials","Reverse proxies, app servers, tuning basics."
+"Enterprise Architecture for IT Strategy","Enterprise Architecture","Coursera","Intermediate",10,"English","https://example.com/ea-strategy","Operating models, roadmaps, capability mapping."
+"Vulnerability Management Practitioner","Vulnerability Management","Udemy","Beginner",4,"English","https://example.com/vm-practitioner","Scanning, prioritization, and remediation workflows."
+"Network Security Monitoring","Network Security Management","LinkedIn Learning","Intermediate",6,"English","https://example.com/nsm","Traffic analysis and SIEM triage fundamentals."
+"Threat Intelligence and Detection","Cybersecurity Threat Intelligence and Detection","Coursera","Advanced",14,"English","https://example.com/cti-detect","Collections, analysis, and detection engineering."
+"Introduction to Forensics","Cybersecurity Forensics","Udemy","Beginner",5,"English","https://example.com/forensics","Preservation, chain of custody, basic tooling."
+"Cyber Risk Management","Cybersecurity Risk Management","LinkedIn Learning","Intermediate",6,"English","https://example.com/cyber-risk","Frameworks, KRIs, and reporting."
+"FP&A: Driver-Based Forecasting","Financial Planning and Analysis","LinkedIn Learning","Intermediate",5,"English","https://example.com/fpa-driver-based","Drivers, sensitivity analysis, dashboards."
+"Financial Modeling Bootcamp","Financial Modeling","Udemy","Advanced",12,"English","https://example.com/fm-bootcamp","Valuation and scenario modeling."
+"Treasury Operations Fundamentals","Treasury","LinkedIn Learning","Beginner",4,"English","https://example.com/treasury-ops","Liquidity, cash positioning, and controls."
+"Intro to Risk Management","Risk Management","Coursera","Beginner",6,"English","https://example.com/intro-risk","Enterprise risk concepts and methods."
+"Terminal Reporting 101","Terminal Reporting","Udemy","Beginner",3,"English","https://example.com/terminal-reporting","Operational KPIs and dashboards."
+"Carbon Accounting Basics","Carbon Accounting and Management","LinkedIn Learning","Beginner",5,"English","https://example.com/carbon-accounting","Scopes 1-3 and reporting standards."
+"HR Business Partner Foundations","Generalist / Business Partner","LinkedIn Learning","Beginner",4,"English","https://example.com/hrbp-foundations","Core HRBP practices and consulting."
+"Talent Management Strategy","Talent Management","Coursera","Intermediate",7,"English","https://example.com/talent-strategy","Succession, potential, and development planning."
+"Employee Engagement Essentials","Staff Development and Engagement","Udemy","Beginner",4,"English","https://example.com/engagement-essentials","Measurement and interventions for engagement."
+"Compensation Fundamentals","Compensation","LinkedIn Learning","Beginner",3,"English","https://example.com/comp-fundamentals","Pay structures and governance."
+"HRIS for Practitioners","HR Information Systems / Technology","Udemy","Intermediate",6,"English","https://example.com/hris","Data models, integrations, and analytics."
+"Leadership Development Toolkit","Leadership Development","LinkedIn Learning","Intermediate",6,"English","https://example.com/leadership-toolkit","Influence, coaching, and decision-making."
+"Organisation Development Practice","Organisation Development","Coursera","Advanced",10,"English","https://example.com/od-practice","Design, change, and culture diagnostics."
