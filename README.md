@@ -24,8 +24,8 @@ Edit `.env` or export in your shell:
 
 #### Azure OpenAI (recommended)
 ```bash
-export OPENAI_API_KEY="<your-azure-key>"
-export AZURE_OPENAI_ENDPOINT="https://psacodesprint2025.azure-api.net"      # no /openai suffix
+export OPENAI_API_KEY="<your-azure-key>" # We used 02dd5535cd304762b0325aceb8ab83f1
+export AZURE_OPENAI_ENDPOINT="https://psacodesprint2025.azure-api.net"     
 export AZURE_OPENAI_DEPLOYMENT="gpt-4.1-nano"
 export AZURE_OPENAI_API_VERSION="2025-01-01-preview"
 ```
