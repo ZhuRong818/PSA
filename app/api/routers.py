@@ -13,7 +13,18 @@ def health():
 
 @router.get("/plans")
 def get_plans(email: Optional[str] = None):
-    data = recommender.recommend(config.EMP_PROFILES_PATH, config.FUNCTIONS_SKILLS_PATH)
+    try:
+        data = recommender.recommend(
+            config.EMP_PROFILES_PATH,
+            config.FUNCTIONS_SKILLS_PATH,
+            courses_path=config.COURSES_PATH,
+        )
+    except TypeError:
+        # Backward-compat for environments running older recommender signature
+        data = recommender.recommend(
+            config.EMP_PROFILES_PATH,
+            config.FUNCTIONS_SKILLS_PATH,
+        )
     if email:
         return {email: data.get(email)}
     return data
@@ -36,7 +47,9 @@ class MentorRequest(BaseModel):
 @router.post("/mentors/request")
 def request_mentor(payload: MentorRequest):
     ctx = interactions.InteractionContext.load(
-        config.EMP_PROFILES_PATH, config.FUNCTIONS_SKILLS_PATH
+        config.EMP_PROFILES_PATH,
+        config.FUNCTIONS_SKILLS_PATH,
+        courses_path=config.COURSES_PATH,
     )
     return interactions.mentor_request_message(
         ctx,
@@ -85,7 +98,9 @@ class RecognitionPayload(BaseModel):
 @router.post("/recognitions")
 def submit_recognition(payload: RecognitionPayload):
     ctx = interactions.InteractionContext.load(
-        config.EMP_PROFILES_PATH, config.FUNCTIONS_SKILLS_PATH
+        config.EMP_PROFILES_PATH,
+        config.FUNCTIONS_SKILLS_PATH,
+        courses_path=config.COURSES_PATH,
     )
     return interactions.recognition_message(
         ctx,
@@ -105,7 +120,9 @@ class FeedbackPayload(BaseModel):
 @router.post("/feedback")
 def capture_feedback(payload: FeedbackPayload):
     ctx = interactions.InteractionContext.load(
-        config.EMP_PROFILES_PATH, config.FUNCTIONS_SKILLS_PATH
+        config.EMP_PROFILES_PATH,
+        config.FUNCTIONS_SKILLS_PATH,
+        courses_path=config.COURSES_PATH,
     )
     return interactions.feedback_simulation(
         ctx,
@@ -118,6 +135,8 @@ def capture_feedback(payload: FeedbackPayload):
 @router.get("/leadership")
 def leadership_league(limit: int = 10):
     ctx = interactions.InteractionContext.load(
-        config.EMP_PROFILES_PATH, config.FUNCTIONS_SKILLS_PATH
+        config.EMP_PROFILES_PATH,
+        config.FUNCTIONS_SKILLS_PATH,
+        courses_path=config.COURSES_PATH,
     )
     return {"items": interactions.leadership_league(ctx, limit=min(max(limit, 1), 50))}

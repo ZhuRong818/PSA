@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from . import recommender
 
@@ -16,8 +16,23 @@ class InteractionContext:
     plans: Dict[str, Dict]
 
     @classmethod
-    def load(cls, employees_path: str, taxonomy_path: str) -> "InteractionContext":
-        plans = recommender.recommend(employees_path, taxonomy_path)
+    def load(
+        cls,
+        employees_path: str,
+        taxonomy_path: str,
+        courses_path: Optional[str] = None,
+    ) -> "InteractionContext":
+        try:
+            plans = recommender.recommend(
+                employees_path,
+                taxonomy_path,
+                courses_path=courses_path,
+            )
+        except TypeError:
+            plans = recommender.recommend(
+                employees_path,
+                taxonomy_path,
+            )
         return cls(plans=plans)
 
     def employee_exists(self, email: str) -> bool:
@@ -127,4 +142,3 @@ def leadership_league(ctx: InteractionContext, limit: int) -> List[Dict]:
             }
         )
     return output
-
