@@ -1,110 +1,99 @@
-Got it. Here’s a **user-friendly README** focused only on setup and usage (no developer jargon).
+# PSA PathFinder – Prototype
 
----
+AI-powered career assistant for PSA employees. See your skill gaps, get course suggestions, simulate mentorship, and chat with Kai for tailored coaching.
 
-# PSA PathFinder — User Guide
+## Requirements
+- macOS/Linux/Windows with Python 3.9+ or Docker
+- Internet access (for OpenAI/Azure replies)
+- OpenAI API key **or** Azure OpenAI key/endpoint/deployment
 
-AI-powered career guidance for PSA employees. See your skill gaps, get upskilling ideas, find courses, and chat with **Kai** for tailored advice.
+## Setup
 
-## What you need
+### 1. Clone / Download
+```bash
+git clone https://github.com/ZhuRong818/PSA.git
+cd PSA
+```
 
-* A computer with internet access (for AI answers).
-* One of these:
+### 2. Environment variables
+Copy the template and fill in your own keys (do **not** commit real keys):
+```bash
+cp .env.example .env
+```
+Edit `.env` or export in your shell:
 
-  * **Azure OpenAI** key + endpoint, or
-  * **OpenAI** API key.
+#### Azure OpenAI (recommended)
+```bash
+export OPENAI_API_KEY="<your-azure-key>"
+export AZURE_OPENAI_ENDPOINT="https://psacodesprint2025.azure-api.net"      # no /openai suffix
+export AZURE_OPENAI_DEPLOYMENT="gpt-4.1-nano"
+export AZURE_OPENAI_API_VERSION="2025-01-01-preview"
+```
 
-## Download
+#### Standard OpenAI
+```bash
+export OPENAI_API_KEY="sk-..."
+export OPENAI_MODEL="gpt-4o-mini"                # optional
+# export OPENAI_BASE_URL="https://your-proxy"   # optional
+```
 
-1. Go to your PSA PathFinder page.
-2. Click **Download** or **Clone** the project.
-3. Unzip (if downloaded as a zip).
+If you want to bake them into `.env`, update the same keys there and restart the server.
 
-## Setup (one-time)
+### 3. Install & Run (Local Python)
 
-### ) Using **Azure OpenAI** 
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+bash scripts/run_local.sh               # uvicorn on http://localhost:8080
+```
 
-1. Open a terminal in the project folder.
-2. Set these values (replace with yours), then press Enter after each line:
+### 4. Frontend (React UI, optional)
+```bash
+cd frontend
+npm install
+npm run dev                               # http://localhost:5173
+```
+The built-in FastAPI demo UI remains available at http://localhost:8080/ui/.
 
-   ```bash
-   export OPENAI_API_KEY="YOUR_AZURE_KEY" //# We provide 02dd5535cd304762b0325aceb8ab83f1 as Azure API key
-   export AZURE_OPENAI_ENDPOINT="https://<your-endpoint>/openai"# We provide https://psacodesprint2025.azure-api.net as endpoint
-   export AZURE_OPENAI_DEPLOYMENT="gpt-4.1-nano"     # or your deployment name
-   export AZURE_OPENAI_API_VERSION="2025-01-01-preview"
-   ```
-3. Skip to **Run**.
+### Docker option
+The current Dockerfile only runs the API:
+```bash
+docker build -t psa-pathfinder:local .
+docker run --rm -p 8080:8080 \
+  -e OPENAI_API_KEY="$OPENAI_API_KEY" \
+  -e AZURE_OPENAI_ENDPOINT="$AZURE_OPENAI_ENDPOINT" \
+  -e AZURE_OPENAI_DEPLOYMENT="$AZURE_OPENAI_DEPLOYMENT" \
+  -e AZURE_OPENAI_API_VERSION="$AZURE_OPENAI_API_VERSION" \
+  psa-pathfinder:local
+```
+Then open http://localhost:8080/ui/. (The React dev server still needs to run separately if you want the richer UI.)
 
+## Features
 
+- **Career Plans** (`GET /plans`)
+  - Leadership Potential Index, next roles (with fit & skill gaps), real course suggestions per upskilling skill, recognition nudges.
+- **Courses Search** (`GET /courses`)
+  - Filter by skill, difficulty, hours, language.
+- **Mentorship & Recognition** (`POST /mentors/request`, `/recognitions`, `/feedback`)
+  - Simulated workflows using the same plan data.
+- **Kai Chat** (`GET /chat`)
+  - Detects career-growth intent, surfaces skill gaps + course recommendations; falls back to OpenAI/Azure responses for other queries.
+- **Leadership League** (`GET /leadership`)
+  - Shows top emerging leaders based on sample LPI scores.
 
-## Run
+## Common issues
 
-### Option 1 — Simple run
+| Symptom | Fix |
+| --- | --- |
+| Chat says “I can help with roles…” | API key not detected. Re-export or update `.env`, restart the server. |
+| Azure returns 404 | Endpoint must exclude `/openai`; use `https://psacodesprint2025.azure-api.net`. |
+| `/plans` or `/courses` 500 | Ensure `data/Courses_Catalog.csv` and other sample CSVs remain in `data/`. |
+| React UI blank | Wait for `npm run dev` to compile; refresh http://localhost:5173 once backend is up. |
 
-1. Install requirements (first time only):
+## Stopping the app
+`Ctrl+C` in each terminal running Uvicorn or Vite.
 
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. Start the app:
-
-   ```bash
-   uvicorn app.main:app --host 0.0.0.0 --port 8080
-   ```
-3. Open your browser:
-   `http://localhost:8080/ui/`
-
-### Option 2 — Docker (no Python setup)
-
-1. Build:
-
-   ```bash
-   docker build -t psa-pathfinder:local .
-   ```
-2. Run (uses your keys from the current shell):
-
-   ```bash
-   docker run --rm -p 8080:8080 \
-     -e OPENAI_API_KEY="$OPENAI_API_KEY" \
-     -e OPENAI_MODEL="$OPENAI_MODEL" \
-     -e AZURE_OPENAI_ENDPOINT="$AZURE_OPENAI_ENDPOINT" \
-     -e AZURE_OPENAI_DEPLOYMENT="$AZURE_OPENAI_DEPLOYMENT" \
-     -e AZURE_OPENAI_API_VERSION="$AZURE_OPENAI_API_VERSION" \
-     psa-pathfinder:local
-   ```
-3. Open your browser:
-   `http://localhost:5173/`
-
-## Use the app
-
-1. **Open** `http://localhost:5173/`.
-2. **Select an employee** from the dropdown.
-3. Review your **Career Plan**:
-
-   * Current role and LPI.
-   * Suggested next roles with fit % and missing skills.
-   * Upskilling plan and recognition nudges.
-4. **Find Courses**:
-
-   * Search by skill, difficulty, or hours.
-   * Click a course to open its page.
-5. **Ask Kai**:
-
-   * Type your question (e.g., “What do I need for Terminal Supervisor?”).
-   * If an employee is selected, answers are personalized.
-
-## Common issues (quick fixes)
-
-* Chat says: “I can help with roles, mentors, and courses…”
-  Your AI key isn’t being used. Re-set your keys in the same terminal and restart the app.
-* Azure users: ensure all **four** values are set (key, endpoint, deployment, api-version).
-* Nothing loads on `/ui`: wait 2–3 seconds after starting; then refresh.
-* Data not found: keep sample files in the `data/` folder (already included).
-
-## Stop the app
-
-* Press `Ctrl + C` in the terminal window.
-.
-
----
-
+## Next steps
+- Replace heuristics with real ML models (pairwise ranking, proficiency scoring).
+- Persist data in Postgres + pgvector/Neo4j.
+- Add CI/CD, tests, and a Docker workflow that bundles the built React UI.
